@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "545087063106",
+    "firebase_url": "https://taxiapp-bd2cf.firebaseio.com",
+    "project_id": "taxiapp-bd2cf",
+    "storage_bucket": "taxiapp-bd2cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545087063106:android:76bff7c200ffae4e",
+        "android_client_info": {
+          "package_name": "com.example.nsajic.testapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545087063106-oo1br782k5itsc3s6f1l9qcq8u8q5dab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzwLV060W_tUSAYq3kvTCBeaMNxpcKcWE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

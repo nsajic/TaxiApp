@@ -67,5 +67,4 @@ public class GradoviFragment extends Fragment {
 
         return gradovi;
     }
-
 }
