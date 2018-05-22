@@ -45,6 +45,6 @@ buildscript {
         google()  // new as of Gradle v4.1 (not to be confused the the Android Gradle plugin below)
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 }
