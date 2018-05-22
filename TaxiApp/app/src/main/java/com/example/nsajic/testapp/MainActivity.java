@@ -1,5 +1,6 @@
 package com.example.nsajic.testapp;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -8,11 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.example.nsajic.testapp.Activities.LoginActivity;
 import com.example.nsajic.testapp.Adapters.ViewPagerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth;
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        if(firebaseAuth.getCurrentUser() == null){
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -51,4 +62,23 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                logOut();
+                return true;
+            case R.string.settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logOut(){
+        firebaseAuth.signOut();;
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
+    }
 }
