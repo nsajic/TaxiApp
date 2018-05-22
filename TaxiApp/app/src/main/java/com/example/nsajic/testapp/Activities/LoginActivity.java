@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nsajic.testapp.MainActivity;
@@ -25,9 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
 
-    EditText emailText;
-    EditText passwordText;
-    Button loginButton;
+    private EditText emailText;
+    private EditText passwordText;
+    private Button loginButton;
+    private TextView registerTextView;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -41,24 +43,26 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
-            SwitchToMainActivity();
+            switchToMainActivity();
         }
 
         emailText = (EditText)findViewById(R.id.emailText);
         passwordText = (EditText) findViewById(R.id.passwordText);
         loginButton = (Button) findViewById(R.id.loginButton);
-
+        registerTextView = (TextView)findViewById(R.id.signUpTextView);
         progressDialog = new ProgressDialog(this);
 
         loginButton.setOnClickListener(this);
+        registerTextView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if(view == loginButton){
             userLogin();
-        }else {
-            // Toast.makeText();
+        }
+        if(view == registerTextView){
+            switchToRegisterActivity();
         }
     }
 
@@ -86,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                         progressDialog.dismiss();
 
                         if(task.isSuccessful()){
-                            SwitchToMainActivity();
+                            switchToMainActivity();
                         }else{
                             Toast.makeText(LoginActivity.this, "Bad password!", Toast.LENGTH_LONG).show();
                         }
@@ -94,9 +98,15 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 });
     }
 
-    private void SwitchToMainActivity(){
+    private void switchToMainActivity(){
         finish();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void switchToRegisterActivity(){
+        finish();
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
 }

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.nsajic.testapp.Activities.LoginActivity;
+import com.example.nsajic.testapp.Activities.RegisterActivity;
 import com.example.nsajic.testapp.Adapters.ViewPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null){
+            switchToLoginActivity();
+        }
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void logOut(){
         firebaseAuth.signOut();;
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void switchToLoginActivity(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
     }
