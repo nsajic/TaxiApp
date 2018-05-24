@@ -50,7 +50,8 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
             Date currentTime = Calendar.getInstance().getTime();
             String feedbackContentText = feedbackContentField.getText().toString();
             UserFeedback feedback = new UserFeedback(userEmail, currentTime,feedbackContentText);
-
+            //TODO: Write to db
+            switchToMainActivity();
         }
     }
 
