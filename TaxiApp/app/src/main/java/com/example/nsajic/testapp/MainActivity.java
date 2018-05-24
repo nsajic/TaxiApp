@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.nsajic.testapp.Activities.AboutActivity;
 import com.example.nsajic.testapp.Activities.LoginActivity;
 import com.example.nsajic.testapp.Activities.RegisterActivity;
 import com.example.nsajic.testapp.Adapters.ViewPagerAdapter;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.action_about:
+                switchToAboutActivity();
+                return true;
             case R.id.action_logout:
                 logOut();
                 return true;
@@ -80,11 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void switchToAboutActivity() {
+        finish();
+        startActivity(new Intent(this, AboutActivity.class));
+    }
 
     private void logOut(){
-        firebaseAuth.signOut();;
-        finish();
-        startActivity(new Intent(this, LoginActivity.class));
+        firebaseAuth.signOut();
+        switchToLoginActivity();
     }
 
     private void switchToLoginActivity(){
