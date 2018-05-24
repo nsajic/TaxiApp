@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.nsajic.testapp.Activities.AboutActivity;
+import com.example.nsajic.testapp.Activities.FeedbackActivity;
 import com.example.nsajic.testapp.Activities.LoginActivity;
 import com.example.nsajic.testapp.Activities.RegisterActivity;
 import com.example.nsajic.testapp.Adapters.ViewPagerAdapter;
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.action_about:
                 switchToAboutActivity();
@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_userguide:
                 switchToUserGuide();
                 return true;
+            case R.id.action_feedback:
+                switchToFeedbackActivity();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -90,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
     private void switchToAboutActivity() {
         finish();
         startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    private void switchToFeedbackActivity() {
+        finish();
+        startActivity(new Intent(this, FeedbackActivity.class));
     }
 
     private void logOut(){
