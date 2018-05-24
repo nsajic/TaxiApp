@@ -27,6 +27,12 @@
         android:title="@string/logOut"
         app:showAsAction="never" >
     </item>
+    <item
+        android:id="@+id/action_userguide"
+        android:orderInCategory="100"
+        android:title="User guide"
+        app:showAsAction="never" >
+    </item>
 
     <item
         android:id="@+id/action_search"
