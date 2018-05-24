@@ -16,6 +16,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_about">Settings</string>
+    <string name="action_userguide">User guide</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

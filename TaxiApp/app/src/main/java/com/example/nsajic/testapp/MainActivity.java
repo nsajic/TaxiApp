@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.string.settings:
                 return true;
+            case R.id.action_userguide:
+                switchToUserGuide();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -97,5 +100,10 @@ public class MainActivity extends AppCompatActivity {
     private void switchToLoginActivity(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void switchToUserGuide(){
+        finish();
+        startActivity(new Intent(this, UserGuid.class));
     }
 }
