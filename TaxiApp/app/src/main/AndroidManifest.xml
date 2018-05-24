@@ -27,7 +27,8 @@
         <activity android:name=".Activities.TaxiInfoActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.AboutActivity"></activity>
+        <activity android:name=".Activities.AboutActivity" />
+        <activity android:name=".Activities.FeedbackActivity"></activity>
     </application>
 
 </manifest>
