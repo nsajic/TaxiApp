@@ -26,6 +26,10 @@ public class TaxiSluzba {
         this.cenaPoKilometru = 390.3;
     }
 
+    public void setBrojAutomobila(Integer brojAutomobila) {
+        this.brojAutomobila = brojAutomobila;
+    }
+
     public void setBrojAutomobila(int brojAutomobila) { this.brojAutomobila = brojAutomobila; }
 
     public Double getCenaPoKilometru() { return cenaPoKilometru; }

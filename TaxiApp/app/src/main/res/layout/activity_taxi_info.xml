@@ -94,7 +94,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/brojAutomobilaView" />
 
-
     <TextView
         android:id="@+id/brojTelefona"
         android:layout_width="wrap_content"
@@ -116,6 +115,30 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cenaPoKilometruView" />
+
+
+    <TextView
+        android:id="@+id/oceniSluzbu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Oceni:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brojTelefona" />
+
+    <RatingBar
+        android:id="@+id/oceniSluzbuView"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:maxHeight="40dp"
+        android:minHeight="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brojTelefonaView" />
 
     <Button
         android:id="@+id/callButton"
