@@ -32,8 +32,6 @@ public class TaxiSluzba {
         this.brojAutomobila = brojAutomobila;
     }
 
-    public void setBrojAutomobila(int brojAutomobila) { this.brojAutomobila = brojAutomobila; }
-
     public Double getCenaPoKilometru() { return cenaPoKilometru; }
 
     public Integer getBrojAutomobila() { return brojAutomobila; }
