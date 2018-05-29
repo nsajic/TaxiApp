@@ -5,8 +5,11 @@ package com.example.nsajic.testapp.Models;
  */
 
 public class Grad {
-    String ime;
-    String postanskiBroj;
+
+    private String ime;
+    private String postanskiBroj;
+
+    public Grad(){}
 
     public Grad(String ime, String postanskiBroj){
         this.ime = ime;

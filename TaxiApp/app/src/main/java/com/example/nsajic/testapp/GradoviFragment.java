@@ -13,8 +13,14 @@ import android.widget.ListView;
 import com.example.nsajic.testapp.Activities.TaxiSluzbeActivity;
 import com.example.nsajic.testapp.Adapters.GradoviAdapter;
 import com.example.nsajic.testapp.Models.Grad;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,7 +28,10 @@ import java.util.ArrayList;
  */
 public class GradoviFragment extends Fragment {
 
-    ArrayList<Grad> gradovi;
+    final List<Grad> gradovi = new ArrayList<Grad>();
+
+    private DatabaseReference dataBaseReference;
+    //private Firebase mRootRef;
 
     public GradoviFragment() {
         // Required empty public constructor
@@ -35,7 +44,26 @@ public class GradoviFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gradovi, container, false);
 
-        gradovi = GetGradovi();
+        dataBaseReference = FirebaseDatabase.getInstance().getReference();
+
+        dataBaseReference.child("gradovi").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                if(gradovi.size() == 0) {
+                    for (DataSnapshot child : children) {
+                        Grad grad = child.getValue(Grad.class);
+                        gradovi.add(grad);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         ListView lv = (ListView)view.findViewById(R.id.gradovi_listview);
         lv.setAdapter(new GradoviAdapter(gradovi, getActivity()));
@@ -54,7 +82,12 @@ public class GradoviFragment extends Fragment {
         return view;
     }
 
-    private ArrayList<Grad> GetGradovi(){
+    private void GetGradovi(){
+
+        //final ArrayList<Grad> gradovi = new ArrayList<>();
+
+
+
         ArrayList<Grad> gradovi = new ArrayList<>();
 
         Grad gradNS = new Grad("Novi Sad", "21000");
@@ -65,6 +98,13 @@ public class GradoviFragment extends Fragment {
         gradovi.add(gradBG);
         gradovi.add(gradSM);
 
-        return gradovi;
+
+        dataBaseReference.child("gradovi").child(gradNS.getPostanskiBroj()).setValue(gradNS);
+        dataBaseReference.child("gradovi").child(gradBG.getPostanskiBroj()).setValue(gradBG);
+        dataBaseReference.child("gradovi").child(gradSM.getPostanskiBroj()).setValue(gradSM);
+
+        //return gradovi;
+
+        //return gradovi;
     }
 }

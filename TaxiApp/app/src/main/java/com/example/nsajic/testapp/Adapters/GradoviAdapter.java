@@ -14,6 +14,7 @@ import com.example.nsajic.testapp.Models.Grad;
 import com.example.nsajic.testapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nsajic on 4/16/2018.
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class GradoviAdapter extends ArrayAdapter<Grad>{
 
-    private ArrayList<Grad> gradovi;
+    private List<Grad> gradovi;
     Context mContext;
 
     private static class ViewHolder{
@@ -29,7 +30,7 @@ public class GradoviAdapter extends ArrayAdapter<Grad>{
         TextView postanskiBroj;
     }
 
-    public GradoviAdapter(ArrayList<Grad> gradovi, Context context){
+    public GradoviAdapter(List<Grad> gradovi, Context context){
         super(context, R.layout.gradovi_listview, gradovi);
 
         this.gradovi = gradovi;
@@ -38,7 +39,11 @@ public class GradoviAdapter extends ArrayAdapter<Grad>{
 
     @Override
     public int getCount() {
-        return gradovi.size();
+        if(gradovi != null){
+            return gradovi.size();
+        }else{
+            return 0;
+        }
     }
 
     @Nullable
