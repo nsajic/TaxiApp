@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.nsajic.testapp.Models.TaxiSluzba;
@@ -29,6 +30,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
         TextView cenaPoKilometru;
         TextView brojAutomobila;
         TextView brojTelefona;
+        ImageButton favouriteBtn;
     }
 
     public TaxiSluzbaAdapter(ArrayList<TaxiSluzba> sluzbe, Context context){
@@ -70,6 +72,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
                 holder.ocena = (TextView) vi.findViewById(R.id.ocenaSluzbe);
                 holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
                 holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
+                //holder.favouriteBtn = (ImageButton) vi.findViewById(R.id.favorite);
 
 
                 vi.setTag(holder);
@@ -84,6 +87,12 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
             holder.ocena.setText(ocenaStr);
             holder.cenaPoKilometru.setText(cenaStr);
             holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
+            /*holder.favouriteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    View v = view;
+                }
+            });*/
 
         }catch (Exception e){
 
