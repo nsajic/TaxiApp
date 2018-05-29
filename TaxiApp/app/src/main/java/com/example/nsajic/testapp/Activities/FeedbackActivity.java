@@ -12,6 +12,8 @@ import com.example.nsajic.testapp.MainActivity;
 import com.example.nsajic.testapp.Models.UserFeedback;
 import com.example.nsajic.testapp.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,12 +24,15 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
     private Button sendFeedbackButton;
     private EditText feedbackContentField;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference dataBaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         getSupportActionBar().setTitle("Send feedback");
+
+        dataBaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
             switchToLoginActivity();
@@ -71,7 +76,7 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void writeOnDatabase(UserFeedback feedback){
-        //TODO: Write feedback to database
+        dataBaseReference.child("feedbacks").child(firebaseAuth.getCurrentUser().getUid()).setValue(feedback);
     }
 
     private void switchToMainActivity(){

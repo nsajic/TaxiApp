@@ -40,7 +40,11 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
     @Override
     public int getCount() {
-        return sluzbe.size();
+        if(sluzbe != null){
+            return sluzbe.size();
+        }else{
+            return 0;
+        }
     }
 
     @Nullable

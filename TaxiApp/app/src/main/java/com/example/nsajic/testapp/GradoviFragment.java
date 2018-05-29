@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class GradoviFragment extends Fragment {
 
-    final List<Grad> gradovi = new ArrayList<Grad>();
+    final ArrayList<Grad> gradovi = new ArrayList<Grad>();
 
     private DatabaseReference dataBaseReference;
     //private Firebase mRootRef;
