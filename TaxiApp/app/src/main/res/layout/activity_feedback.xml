@@ -6,22 +6,22 @@
     android:layout_height="match_parent"
     tools:context="Activities.FeedbackActivity">
 
-
-    <EditText
-        android:id="@+id/feedbackField"
-        android:layout_width="match_parent"
-        android:layout_height="100pt"
-        android:layout_alignParentRight="true"
+    <LinearLayout
+        android:id="@+id/scrollView"
         android:layout_margin="15dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="top|left"
-        android:hint="@string/insertFeedback"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/backButton" />
-
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentRight="true"
+        app:layout_constraintBottom_toTopOf="@+id/sendButton">
+        <EditText
+            android:id="@+id/feedbackField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:hint="@string/insertFeedback"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical" />
+    </LinearLayout>
     <Button
         android:id="@+id/sendButton"
         android:layout_width="match_parent"
@@ -30,9 +30,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Send feedback"
-        app:layout_constraintTop_toBottomOf="@+id/feedbackField"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/backButton" />
 
     <Button
         android:id="@+id/backButton"
@@ -42,8 +43,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Back"
-        app:layout_constraintTop_toBottomOf="@+id/feedbackField"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -14,6 +14,7 @@ import com.example.nsajic.testapp.Models.Grad;
 import com.example.nsajic.testapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nsajic on 4/16/2018.
@@ -38,7 +39,11 @@ public class GradoviAdapter extends ArrayAdapter<Grad>{
 
     @Override
     public int getCount() {
-        return gradovi.size();
+        if(gradovi != null){
+            return gradovi.size();
+        }else{
+            return 0;
+        }
     }
 
     @Nullable

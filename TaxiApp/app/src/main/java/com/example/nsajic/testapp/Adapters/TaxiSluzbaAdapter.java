@@ -26,6 +26,9 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
     private static class ViewHolder{
         TextView nazivSluzbe;
         TextView ocena;
+        TextView cenaPoKilometru;
+        TextView brojAutomobila;
+        TextView brojTelefona;
     }
 
     public TaxiSluzbaAdapter(ArrayList<TaxiSluzba> sluzbe, Context context){
@@ -37,7 +40,11 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
     @Override
     public int getCount() {
-        return sluzbe.size();
+        if(sluzbe != null){
+            return sluzbe.size();
+        }else{
+            return 0;
+        }
     }
 
     @Nullable
@@ -61,14 +68,23 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
                 holder.nazivSluzbe = (TextView) vi.findViewById(R.id.imeSluzbe);
                 holder.ocena = (TextView) vi.findViewById(R.id.ocenaSluzbe);
+                holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
+                holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
+
 
                 vi.setTag(holder);
             }else{
                 holder = (ViewHolder) vi.getTag();
             }
 
+            String ocenaStr = sluzbe.get(position).getOcena()+"";
+            String cenaStr = sluzbe.get(position).getCenaPoKilometru()+"";
+
             holder.nazivSluzbe.setText(sluzbe.get(position).getIme());
-            holder.ocena.setText(sluzbe.get(position).getOcena());
+            holder.ocena.setText(ocenaStr);
+            holder.cenaPoKilometru.setText(cenaStr);
+            holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
+
         }catch (Exception e){
 
         }
