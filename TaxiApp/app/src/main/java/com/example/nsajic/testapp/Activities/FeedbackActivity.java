@@ -76,7 +76,8 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void writeOnDatabase(UserFeedback feedback){
-        dataBaseReference.child("feedbacks").child(firebaseAuth.getCurrentUser().getUid()).setValue(feedback);
+        //dataBaseReference.child("feedbacks").child(firebaseAuth.getCurrentUser().getUid()).setValue(feedback);
+        dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("feedbacks").child(feedback.getDateCreated().toString()).setValue(feedback);
     }
 
     private void switchToMainActivity(){
