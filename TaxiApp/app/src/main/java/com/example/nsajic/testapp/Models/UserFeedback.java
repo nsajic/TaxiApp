@@ -7,6 +7,8 @@ public class UserFeedback {
     private Date dateCreated;
     private String content;
 
+    public UserFeedback() {}
+
     public UserFeedback(String userEmail, Date dateCreated, String content) {
         this.userEmail = userEmail;
         this.dateCreated = dateCreated;

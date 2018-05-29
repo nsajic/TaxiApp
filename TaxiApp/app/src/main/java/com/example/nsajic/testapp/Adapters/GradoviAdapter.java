@@ -22,7 +22,7 @@ import java.util.List;
 
 public class GradoviAdapter extends ArrayAdapter<Grad>{
 
-    private List<Grad> gradovi;
+    private ArrayList<Grad> gradovi;
     Context mContext;
 
     private static class ViewHolder{
@@ -30,7 +30,7 @@ public class GradoviAdapter extends ArrayAdapter<Grad>{
         TextView postanskiBroj;
     }
 
-    public GradoviAdapter(List<Grad> gradovi, Context context){
+    public GradoviAdapter(ArrayList<Grad> gradovi, Context context){
         super(context, R.layout.gradovi_listview, gradovi);
 
         this.gradovi = gradovi;

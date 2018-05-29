@@ -14,16 +14,24 @@ import android.widget.ListView;
 
 import com.example.nsajic.testapp.Adapters.TaxiSluzbaAdapter;
 import com.example.nsajic.testapp.MainActivity;
+import com.example.nsajic.testapp.Models.Grad;
 import com.example.nsajic.testapp.Models.TaxiSluzba;
 import com.example.nsajic.testapp.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TaxiSluzbeActivity extends AppCompatActivity {
 
     private static final int CALL_PHONE = 1;
-    ArrayList<TaxiSluzba> taxiSluzbeNS;
+    ArrayList<TaxiSluzba> taxiSluzbeNS = new ArrayList<TaxiSluzba>();
     ListView listViewSluzbe;
+    private DatabaseReference dataBaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +43,47 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
 
         String postanskiBroj = intent.getStringExtra("postanskiBroj");
 
-        if(postanskiBroj.toString().contentEquals("21000")){
+        dataBaseReference = FirebaseDatabase.getInstance().getReference();
+
+        dataBaseReference.child("gradovi").child(postanskiBroj).child("taxiSluzbe").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                if(taxiSluzbeNS.size() == 0) {
+                    for (DataSnapshot child : children) {
+                        TaxiSluzba taxiSluzba = child.getValue(TaxiSluzba.class);
+                        taxiSluzbeNS.add(taxiSluzba);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        listViewSluzbe = (ListView)findViewById(R.id.taxiSluzbe_listview);
+        listViewSluzbe.setAdapter(new TaxiSluzbaAdapter(taxiSluzbeNS, this));
+
+        listViewSluzbe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(view.getContext(), TaxiInfoActivity.class);
+
+                intent.putExtra("imeSluzbe", taxiSluzbeNS.get(i).getIme());
+                intent.putExtra("brojTelefona", taxiSluzbeNS.get(i).getBrojTelefona());
+                intent.putExtra("ocenaSluzbe", taxiSluzbeNS.get(i).getOcena().toString());
+                intent.putExtra("brojAutomobilaSluzbe", taxiSluzbeNS.get(i).getBrojAutomobila().toString());
+                intent.putExtra("cenaPoKilometru", taxiSluzbeNS.get(i).getCenaPoKilometru().toString());
+
+                startActivity(intent);
+            }
+        });
+
+
+        /*if(postanskiBroj.toString().contentEquals("21000")){
             taxiSluzbeNS = GetSluzbeNS();
 
             listViewSluzbe = (ListView)findViewById(R.id.taxiSluzbe_listview);
@@ -56,7 +104,7 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
+        }*/
 
     }
 
