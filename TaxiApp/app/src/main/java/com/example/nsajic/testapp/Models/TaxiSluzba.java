@@ -11,6 +11,8 @@ public class TaxiSluzba {
     private Double cenaPoKilometru;
     private Integer brojAutomobila;
 
+    public TaxiSluzba() {}
+
     public TaxiSluzba(String ime, String brojTelefona, Double ocena, Double cenaPoKilometru, int brojAutomobila) {
         this.ime = ime;
         this.brojTelefona = brojTelefona;
