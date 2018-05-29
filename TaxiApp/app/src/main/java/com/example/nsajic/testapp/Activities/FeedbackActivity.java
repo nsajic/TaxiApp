@@ -1,6 +1,7 @@
 package com.example.nsajic.testapp.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -49,10 +50,28 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
             String userEmail = firebaseAuth.getCurrentUser().getEmail();
             Date currentTime = Calendar.getInstance().getTime();
             String feedbackContentText = feedbackContentField.getText().toString();
+
+
             UserFeedback feedback = new UserFeedback(userEmail, currentTime,feedbackContentText);
-            //TODO: Write to db
+            //notifyOnEmail(feedback);
+            writeOnDatabase(feedback);
             switchToMainActivity();
         }
+    }
+
+    private void notifyOnEmail(UserFeedback feedback){
+        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+        intent.setType("text/plain");
+        //intent.putExtra(Intent.EXTRA_SUBJECT, "onezerobeatz@gmail.com");
+        intent.putExtra(Intent.EXTRA_TEXT, "New feedback from: "+feedback.getUserEmail()+ "./n/n"+feedback.getContent()+"/n/n");
+
+        intent.setData(Uri.parse("mailto:onezerobeatz@gmail.com")); // or just "mailto:" for blank
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+        startActivity(intent);
+    }
+
+    private void writeOnDatabase(UserFeedback feedback){
+        //TODO: Write feedback to database
     }
 
     private void switchToMainActivity(){
