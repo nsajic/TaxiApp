@@ -12,7 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.nsajic.testapp.Activities.AboutActivity;
+import com.example.nsajic.testapp.Activities.FeedbackActivity;
 import com.example.nsajic.testapp.Activities.LoginActivity;
+import com.example.nsajic.testapp.Activities.RegisterActivity;
 import com.example.nsajic.testapp.Adapters.ViewPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        
         firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null){
+            switchToLoginActivity();
+        }
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,21 +71,47 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
+            case R.id.action_about:
+                switchToAboutActivity();
+                return true;
             case R.id.action_logout:
                 logOut();
                 return true;
             case R.string.settings:
                 return true;
+            case R.id.action_userguide:
+                switchToUserGuide();
+                return true;
+            case R.id.action_feedback:
+                switchToFeedbackActivity();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void switchToAboutActivity() {
+        finish();
+        startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    private void switchToFeedbackActivity() {
+        finish();
+        startActivity(new Intent(this, FeedbackActivity.class));
+    }
 
     private void logOut(){
-        firebaseAuth.signOut();;
+        firebaseAuth.signOut();
+        switchToLoginActivity();
+    }
+
+    private void switchToLoginActivity(){
         finish();
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void switchToUserGuide(){
+        finish();
+        startActivity(new Intent(this, UserGuid.class));
     }
 }

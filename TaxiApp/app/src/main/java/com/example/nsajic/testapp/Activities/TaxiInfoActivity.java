@@ -19,6 +19,8 @@ public class TaxiInfoActivity extends AppCompatActivity {
     private static final int CALL_PHONE = 1;
     TextView nazivSluzbe;
     TextView ocenaSluzbe;
+    TextView brojAutomobilaSluzbe;
+    TextView cenaPoKilometruSluzbe;
     TextView brojTelefonaSluzbe;
     Button callButton;
     Intent callIntent;
@@ -34,6 +36,9 @@ public class TaxiInfoActivity extends AppCompatActivity {
         nazivSluzbe = (TextView)findViewById(R.id.nazivView);
         ocenaSluzbe = (TextView)findViewById(R.id.ocenaView);
         brojTelefonaSluzbe = (TextView)findViewById(R.id.brojTelefonaView);
+        cenaPoKilometruSluzbe = (TextView)findViewById(R.id.cenaPoKilometruView);
+        brojAutomobilaSluzbe = (TextView)findViewById(R.id.brojAutomobilaView);
+
         callButton = (Button) findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,6 +57,8 @@ public class TaxiInfoActivity extends AppCompatActivity {
 
         nazivSluzbe.setText(intent.getStringExtra("imeSluzbe"));
         ocenaSluzbe.setText(intent.getStringExtra("ocenaSluzbe"));
+        brojAutomobilaSluzbe.setText(intent.getStringExtra("brojAutomobilaSluzbe"));
+        cenaPoKilometruSluzbe.setText(intent.getStringExtra("cenaPoKilometru"));
         brojTelefonaSluzbe.setText(intent.getStringExtra("brojTelefona"));
     }
 }

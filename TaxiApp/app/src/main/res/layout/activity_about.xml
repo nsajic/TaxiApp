@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nsajic.testapp.Activities.TaxiInfoActivity">
+    tools:context="Activities.AboutActivity">
 
     <TextView
         android:id="@+id/nazivLabel"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Naziv:"
+        android:text="Name:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,88 +23,44 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="Find taxi"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ocenaLabel"
+        android:id="@+id/AuthorsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Prosecna ocena:"
+        android:text="Authors:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nazivLabel" />
 
     <TextView
-        android:id="@+id/ocenaView"
+        android:id="@+id/author1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="Sasa Momcilovic"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nazivView" />
 
-    <TextView
-        android:id="@+id/brojAutomobilaLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Broj automobila:"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocenaLabel" />
 
     <TextView
-        android:id="@+id/brojAutomobilaView"
+        android:id="@+id/author2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="Nikola Sajic"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ocenaView" />
-
-    <TextView
-        android:id="@+id/cenaPoKilometruLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Cena po km:"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brojAutomobilaLabel" />
-
-    <TextView
-        android:id="@+id/cenaPoKilometruView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brojAutomobilaView" />
-
-
-    <TextView
-        android:id="@+id/brojTelefona"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Broj telefona:"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cenaPoKilometruLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/author1" />
 
     <TextView
         android:id="@+id/brojTelefonaView"
@@ -112,19 +68,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="Aleksandar Ljahovic"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cenaPoKilometruView" />
+        app:layout_constraintTop_toBottomOf="@+id/author2" />
 
     <Button
-        android:id="@+id/callButton"
-        android:layout_width="match_parent"
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="CALL"
+        android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

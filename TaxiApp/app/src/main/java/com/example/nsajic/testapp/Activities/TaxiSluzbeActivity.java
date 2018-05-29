@@ -49,7 +49,9 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
 
                     intent.putExtra("imeSluzbe", taxiSluzbeNS.get(i).getIme());
                     intent.putExtra("brojTelefona", taxiSluzbeNS.get(i).getBrojTelefona());
-                    intent.putExtra("ocenaSluzbe", taxiSluzbeNS.get(i).getOcena());
+                    intent.putExtra("ocenaSluzbe", taxiSluzbeNS.get(i).getOcena().toString());
+                    intent.putExtra("brojAutomobilaSluzbe", taxiSluzbeNS.get(i).getBrojAutomobila().toString());
+                    intent.putExtra("cenaPoKilometru", taxiSluzbeNS.get(i).getCenaPoKilometru().toString());
 
                     startActivity(intent);
                 }
@@ -61,18 +63,18 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
     private ArrayList<TaxiSluzba> GetSluzbeNS(){
         ArrayList<TaxiSluzba> taxiSluzbe = new ArrayList<>();
 
-        taxiSluzbe.add(new TaxiSluzba("Sasa taxi", "+381659300975", "5"));
-        taxiSluzbe.add(new TaxiSluzba("Maxi", "021222111", "3"));
-        taxiSluzbe.add(new TaxiSluzba("Ljubicasti", "0215555333", "4"));
-        taxiSluzbe.add(new TaxiSluzba("Zuti", "021555444", "2"));
-        taxiSluzbe.add(new TaxiSluzba("Zeleni", "021555333", "5"));
-        taxiSluzbe.add(new TaxiSluzba("Crveni", "021555333", "3"));
-        taxiSluzbe.add(new TaxiSluzba("Rozi", "021555333", "4"));
-        taxiSluzbe.add(new TaxiSluzba("Plavi", "021555333", "4"));
-        taxiSluzbe.add(new TaxiSluzba("Bez", "021555233", "4"));
-        taxiSluzbe.add(new TaxiSluzba("Braon", "021576333", "1"));
-        taxiSluzbe.add(new TaxiSluzba("Beli", "021555213", "3"));
-        taxiSluzbe.add(new TaxiSluzba("Sivi", "021556333", "5"));
+        taxiSluzbe.add(new TaxiSluzba("Sasa taxi", "+381659300975", 5.0));
+        taxiSluzbe.add(new TaxiSluzba("Maxi", "021222111", 3.0));
+        taxiSluzbe.add(new TaxiSluzba("Ljubicasti", "0215555333", 4.0));
+        taxiSluzbe.add(new TaxiSluzba("Zuti", "021555444", 2.0));
+        taxiSluzbe.add(new TaxiSluzba("Zeleni", "021555333", 5.0));
+        taxiSluzbe.add(new TaxiSluzba("Crveni", "021555333", 3.0));
+        taxiSluzbe.add(new TaxiSluzba("Rozi", "021555333", 4.0));
+        taxiSluzbe.add(new TaxiSluzba("Plavi", "021555333", 4.0));
+        taxiSluzbe.add(new TaxiSluzba("Bez", "021555233", 4.0));
+        taxiSluzbe.add(new TaxiSluzba("Braon", "021576333", 1.0));
+        taxiSluzbe.add(new TaxiSluzba("Beli", "021555213", 3.0));
+        taxiSluzbe.add(new TaxiSluzba("Sivi", "021556333", 5.0));
 
         return  taxiSluzbe;
     }
