@@ -20,7 +20,6 @@ import java.util.Date;
 
 public class FeedbackActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button backButton;
     private Button sendFeedbackButton;
     private EditText feedbackContentField;
     private FirebaseAuth firebaseAuth;
@@ -38,19 +37,15 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
             switchToLoginActivity();
         }
 
-        backButton = (Button) findViewById(R.id.backButton);
         sendFeedbackButton = (Button) findViewById(R.id.sendButton);
         feedbackContentField = (EditText) findViewById(R.id.feedbackField);
 
-        backButton.setOnClickListener(this);
         sendFeedbackButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.equals(backButton)) {
-            switchToMainActivity();
-        } else if (view.equals(sendFeedbackButton))
+        if (view.equals(sendFeedbackButton))
         {
             String userEmail = firebaseAuth.getCurrentUser().getEmail();
             Date currentTime = Calendar.getInstance().getTime();

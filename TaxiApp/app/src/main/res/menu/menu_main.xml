@@ -22,22 +22,15 @@
         app:showAsAction="never" >
     </item>
     <item
-        android:id="@+id/action_logout"
-        android:orderInCategory="100"
-        android:title="@string/logOut"
-        app:showAsAction="never" >
-    </item>
-    <item
         android:id="@+id/action_userguide"
         android:orderInCategory="100"
         android:title="User guide"
         app:showAsAction="never" >
     </item>
-
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:icon="@drawable/search"
-        app:showAsAction="ifRoom" />
-
+        android:title="@string/logOut"
+        app:showAsAction="never" >
+    </item>
 </menu>
