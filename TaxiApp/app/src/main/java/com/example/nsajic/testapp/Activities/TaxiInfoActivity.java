@@ -13,11 +13,19 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.nsajic.testapp.Models.TaxiSluzba;
 import com.example.nsajic.testapp.Models.UserRating;
 import com.example.nsajic.testapp.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
+import java.util.ArrayList;
+
+public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener, View.OnClickListener {
 
     private static final int CALL_PHONE = 1;
     private TextView nazivSluzbe;
@@ -28,9 +36,12 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
     private RatingBar ratingBar;
     private Button callButton;
 
+    private DatabaseReference databaseReference;
+
     private FirebaseAuth firebaseAuth;
-    Intent callIntent;
-    Intent intent;
+
+    private Intent callIntent;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,7 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         getSupportActionBar().setTitle("Info");
         firebaseAuth = FirebaseAuth.getInstance();
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         intent = getIntent();
 
         nazivSluzbe = (TextView)findViewById(R.id.nazivView);
@@ -48,28 +60,20 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         brojAutomobilaSluzbe = (TextView)findViewById(R.id.brojAutomobilaView);
 
         callButton = (Button) findViewById(R.id.callButton);
-        callButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + intent.getStringExtra("brojTelefona")));
+        callButton.setOnClickListener(this);
 
-                if (ContextCompat.checkSelfPermission(TaxiInfoActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(TaxiInfoActivity.this, new String[]{Manifest.permission.CALL_PHONE},CALL_PHONE);
-                }
-                else
-                {
-                    startActivity(callIntent);
-                }
-            }
-        });
         ratingBar = (RatingBar)findViewById(R.id.oceniSluzbuView);
         ratingBar.setOnRatingBarChangeListener(this);
+
+        setProsecnaOcenaSluzbe();
         nazivSluzbe.setText(intent.getStringExtra("imeSluzbe"));
-        ocenaSluzbe.setText(intent.getStringExtra("ocenaSluzbe"));
         brojAutomobilaSluzbe.setText(intent.getStringExtra("brojAutomobilaSluzbe"));
         cenaPoKilometruSluzbe.setText(intent.getStringExtra("cenaPoKilometru"));
         brojTelefonaSluzbe.setText(intent.getStringExtra("brojTelefona"));
-        ratingBar.setRating(getCurentUserRatingBy(intent.getStringExtra("imeSluzbe")));
+
+        String serviceName = intent.getStringExtra("imeSluzbe");
+        setCurrentUserRatingForTaxiService();
+        //ratingBar.setRating(getCurrentUserRatingBy(serviceName));
     }
 
     @Override
@@ -80,12 +84,71 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         writeUserRatingToDatabase(userRating);
     }
 
+    private void setProsecnaOcenaSluzbe () {
+        databaseReference.child("korisnici").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Float userRatingsCount = 0f;
+                Float sum = 0f;
+                Iterable<DataSnapshot> userUids = dataSnapshot.getChildren();
+                for (DataSnapshot userUidSnapsot : userUids) {
+                    for(DataSnapshot feedbackOrOcenaSnap : userUidSnapsot.getChildren()){
+                        if(feedbackOrOcenaSnap.getKey().toString().equals("ocene")) {
+                            for(DataSnapshot userRadingDataSnapshot : feedbackOrOcenaSnap.getChildren()) {
+                                UserRating ur = userRadingDataSnapshot.getValue(UserRating.class);
+                                if (ur.getTaxiServiceName().equals(intent.getStringExtra("imeSluzbe"))) {
+                                    userRatingsCount++;
+                                    sum += ur.getValue();
+                                }
+                            }
+                        }
+                    }
+                }
+                if(sum != 0) {
+                    Float avg = sum/userRatingsCount;
+                    ocenaSluzbe.setText(avg.toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void writeUserRatingToDatabase(UserRating userRating) {
-        //TODO: WriteToDataabase
+        databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
     }
 
-    private Float getCurentUserRatingBy(String serviceName){
-        //TODO: ReadFromDatabase
-        return 3.0f;
+    private void setCurrentUserRatingForTaxiService(){
+        String serviceName = intent.getStringExtra("imeSluzbe");
+        databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(serviceName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserRating userRating = dataSnapshot.getValue(UserRating.class);
+                if(userRating!=null) {
+                    ratingBar.setRating(userRating.getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + intent.getStringExtra("brojTelefona")));
+
+        if (ContextCompat.checkSelfPermission(TaxiInfoActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(TaxiInfoActivity.this, new String[]{Manifest.permission.CALL_PHONE},CALL_PHONE);
+        }
+        else
+        {
+            startActivity(callIntent);
+        }
     }
 }

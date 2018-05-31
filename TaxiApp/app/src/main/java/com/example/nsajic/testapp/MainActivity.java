@@ -91,12 +91,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void switchToAboutActivity() {
-        finish();
         startActivity(new Intent(this, AboutActivity.class));
     }
 
     private void switchToFeedbackActivity() {
-        finish();
         startActivity(new Intent(this, FeedbackActivity.class));
     }
 
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void switchToUserGuide(){
-        finish();
         startActivity(new Intent(this, UserGuid.class));
     }
 }
