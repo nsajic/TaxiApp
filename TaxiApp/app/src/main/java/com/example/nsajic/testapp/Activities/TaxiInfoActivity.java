@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nsajic.testapp.MainActivity;
 import com.example.nsajic.testapp.Models.TaxiSluzba;
@@ -87,7 +88,6 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         setCurrentUserRatingForTaxiService();
         //ratingBar.setRating(getCurrentUserRatingBy(serviceName));
     }
-
     @Override
     public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
         String userEmail = firebaseAuth.getCurrentUser().getEmail();
@@ -95,7 +95,22 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         UserRating userRating = new UserRating(userEmail, serviceName, (Float)v);
         writeUserRatingToDatabase(userRating);
     }
+    @Override
+    public void onClick(View view) {
+        if(view == addRecensionShowDialogButton)
+        {
+            onAddRecensionDialogShowButton();
+        }
+        else if (view == callButton)
+        {
+            onCallButtonClick();
+        }
+        else if (view == addRecensionButton)
+        {
+            onAddRecensionButton();
 
+        }
+    }
 
     private void setProsecnaOcenaSluzbe () {
         databaseReference.child("korisnici").addValueEventListener(new ValueEventListener() {
@@ -129,9 +144,6 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
             }
         });
     }
-    private void writeUserRatingToDatabase(UserRating userRating) {
-        databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
-    }
     private void setCurrentUserRatingForTaxiService(){
         String serviceName = intent.getStringExtra("imeSluzbe");
         databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(serviceName).addValueEventListener(new ValueEventListener() {
@@ -150,6 +162,19 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         });
 
     }
+
+    private void writeUserRecensionToDatabase(String userRecension){
+        String userGuid = firebaseAuth.getCurrentUser().getUid();
+        String userEmail = firebaseAuth.getCurrentUser().getEmail();
+        Date currentTime = Calendar.getInstance().getTime();
+        String taxiServiceName = intent.getStringExtra("imeSluzbe");
+        UserRecension userRating = new UserRecension(userEmail, userRecension, taxiServiceName, currentTime);
+        databaseReference.child("recensions").child(userGuid).child(taxiServiceName).child(currentTime.toString()).setValue(userRating);
+    }
+    private void writeUserRatingToDatabase(UserRating userRating) {
+        databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
+    }
+
     private void onCallButtonClick(){
         callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + intent.getStringExtra("brojTelefona")));
 
@@ -175,31 +200,9 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         if(!userRecension.isEmpty()) {
             writeUserRecensionToDatabase(userRecension);
             addRecensionDialog.dismiss();
+        } else {
+            Toast.makeText(this, "Your recension cannot be empty!", Toast.LENGTH_LONG).show();
         }
-    }
-    private void writeUserRecensionToDatabase(String userRecension){
-        String userGuid = firebaseAuth.getCurrentUser().getUid();
-        String userEmail = firebaseAuth.getCurrentUser().getEmail();
-        Date currentTime = Calendar.getInstance().getTime();
-        String taxiServiceName = intent.getStringExtra("imeSluzbe");
-        UserRecension userRating = new UserRecension(userEmail, userRecension, taxiServiceName, currentTime);
-        databaseReference.child("recensions").child(userGuid).child(taxiServiceName).child(currentTime.toString()).setValue(userRating);
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view == addRecensionShowDialogButton)
-        {
-            onAddRecensionDialogShowButton();
-        }
-        else if (view == callButton)
-        {
-            onCallButtonClick();
-        }
-        else if (view == addRecensionButton)
-        {
-            onAddRecensionButton();
-
-        }
-    }
 }
