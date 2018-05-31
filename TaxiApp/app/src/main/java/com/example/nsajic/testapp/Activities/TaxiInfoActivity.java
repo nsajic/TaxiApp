@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener, View.OnClickListener {
 
     private static final int CALL_PHONE = 1;
@@ -33,7 +35,6 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
     private TextView brojTelefonaSluzbe;
     private RatingBar ratingBar;
     private Button callButton;
-    private UserRating userRatingForSpecifiedService = new UserRating("","",3f);
 
     private DatabaseReference databaseReference;
 
@@ -64,14 +65,14 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         ratingBar = (RatingBar)findViewById(R.id.oceniSluzbuView);
         ratingBar.setOnRatingBarChangeListener(this);
 
+        setProsecnaOcenaSluzbe();
         nazivSluzbe.setText(intent.getStringExtra("imeSluzbe"));
-        ocenaSluzbe.setText(intent.getStringExtra("ocenaSluzbe"));
         brojAutomobilaSluzbe.setText(intent.getStringExtra("brojAutomobilaSluzbe"));
         cenaPoKilometruSluzbe.setText(intent.getStringExtra("cenaPoKilometru"));
         brojTelefonaSluzbe.setText(intent.getStringExtra("brojTelefona"));
 
         String serviceName = intent.getStringExtra("imeSluzbe");
-        setCurrentUserRatingBy(serviceName);
+        setCurrentUserRatingForTaxiService();
         //ratingBar.setRating(getCurrentUserRatingBy(serviceName));
     }
 
@@ -83,21 +84,51 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         writeUserRatingToDatabase(userRating);
     }
 
+    private void setProsecnaOcenaSluzbe () {
+        databaseReference.child("korisnici").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Float userRatingsCount = 0f;
+                Float sum = 0f;
+                Iterable<DataSnapshot> userUids = dataSnapshot.getChildren();
+                for (DataSnapshot userUidSnapsot : userUids) {
+                    for(DataSnapshot feedbackOrOcenaSnap : userUidSnapsot.getChildren()){
+                        if(feedbackOrOcenaSnap.getKey().toString().equals("ocene")) {
+                            for(DataSnapshot userRadingDataSnapshot : feedbackOrOcenaSnap.getChildren()) {
+                                UserRating ur = userRadingDataSnapshot.getValue(UserRating.class);
+                                if (ur.getTaxiServiceName().equals(intent.getStringExtra("imeSluzbe"))) {
+                                    userRatingsCount++;
+                                    sum += ur.getValue();
+                                }
+                            }
+                        }
+                    }
+                }
+                if(sum != 0) {
+                    Float avg = sum/userRatingsCount;
+                    ocenaSluzbe.setText(avg.toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void writeUserRatingToDatabase(UserRating userRating) {
         databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
     }
-    private Float getCurrentUserRatingBy (String serviceName){
-        return 3f;
-        //TODO: Read concrete value from database without any listeners
-        //databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(serviceName).
-    }
-    private void setCurrentUserRatingBy(final String serviceName){
+
+    private void setCurrentUserRatingForTaxiService(){
+        String serviceName = intent.getStringExtra("imeSluzbe");
         databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(serviceName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserRating userRating = dataSnapshot.getValue(UserRating.class);
-                userRatingForSpecifiedService = userRating;
-                //ratingBar.setRating(userRatingForSpecifiedService.getValue());
+                if(userRating!=null) {
+                    ratingBar.setRating(userRating.getValue());
+                }
             }
 
             @Override
