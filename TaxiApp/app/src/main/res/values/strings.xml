@@ -8,6 +8,8 @@
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="insertFeedback">Insert feedback..</string>
+    <string name="insertRecension">Insert recension..</string>
+
     <string name="feedback">Send feedback</string>
 
     <!-- Category name for useful info [CHAR LIMIT=20] -->
