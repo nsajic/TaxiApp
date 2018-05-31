@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.example.nsajic.testapp.Adapters.TaxiSluzbaAdapter;
@@ -70,6 +71,8 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
         listViewSluzbe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                CheckBox cb = (CheckBox) view.findViewById((R.id.favouriteChecked));
                 Intent intent = new Intent(view.getContext(), TaxiInfoActivity.class);
 
                 intent.putExtra("imeSluzbe", taxiSluzbeNS.get(i).getIme());
