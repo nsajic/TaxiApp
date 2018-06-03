@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.example.nsajic.testapp.Models.TaxiSluzba;
 import com.example.nsajic.testapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
     private ArrayList<TaxiSluzba> sluzbe;
+    private DatabaseReference dataBaseReference;
+    private FirebaseAuth firebaseAuth;
     Context mContext;
 
     private static class ViewHolder{
@@ -61,6 +66,8 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
+        dataBaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         try{
             if(convertView == null){
@@ -77,7 +84,13 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
                 holder.favouriteChecked.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        System.out.print(sluzbe.get(position).getIme());
+                        //dataBaseReference.child("favouriteServices").child(firebaseAuth.getCurrentUser().getUid()).setValue(sluzbe.get(position).getIme());
+
+                        if(((CheckBox) view).isChecked()) {
+                            dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").child(sluzbe.get(position).getIme()).setValue(sluzbe.get(position).getIme());
+                        }else{
+                            dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").child(sluzbe.get(position).getIme()).removeValue();
+                        }
                     }
                 });
 
