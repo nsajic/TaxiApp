@@ -31,7 +31,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
         TextView cenaPoKilometru;
         TextView brojAutomobila;
         TextView brojTelefona;
-        //CheckBox favouriteChecked;
+        CheckBox favouriteChecked;
     }
 
     public TaxiSluzbaAdapter(ArrayList<TaxiSluzba> sluzbe, Context context){
@@ -58,7 +58,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
 
@@ -73,11 +73,23 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
                 //holder.ocena = (TextView) vi.findViewById(R.id.);
                 holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
                 holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
-                //holder.favouriteChecked = (CheckBox) vi.findViewById(R.id.favouriteChecked);
+                holder.favouriteChecked = (CheckBox) vi.findViewById(R.id.favouriteChecked);
+                holder.favouriteChecked.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.print(sluzbe.get(position).getIme());
+                    }
+                });
 
 
                 vi.setTag(holder);
             }else{
+                vi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.print("aaa");
+                    }
+                });
                 holder = (ViewHolder) vi.getTag();
             }
 

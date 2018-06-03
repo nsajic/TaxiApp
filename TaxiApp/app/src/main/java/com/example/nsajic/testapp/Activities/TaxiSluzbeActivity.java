@@ -72,7 +72,7 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CheckBox cb = (CheckBox) view.findViewById((R.id.favouriteChecked));
+                //CheckBox cb = (CheckBox) view.findViewById((R.id.favouriteChecked));
                 Intent intent = new Intent(view.getContext(), TaxiInfoActivity.class);
 
                 intent.putExtra("imeSluzbe", taxiSluzbeNS.get(i).getIme());
