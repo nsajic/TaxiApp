@@ -6,15 +6,19 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nsajic.testapp.MainActivity;
 import com.example.nsajic.testapp.Models.TaxiSluzba;
 import com.example.nsajic.testapp.Models.UserRating;
+import com.example.nsajic.testapp.Models.UserRecension;
 import com.example.nsajic.testapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener, View.OnClickListener {
 
@@ -33,8 +39,12 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
     private TextView brojAutomobilaSluzbe;
     private TextView cenaPoKilometruSluzbe;
     private TextView brojTelefonaSluzbe;
+    private TextView userRecensionTextView;
     private RatingBar ratingBar;
     private Button callButton;
+    private Button addRecensionShowDialogButton;
+    private Button addRecensionButton;
+    private AlertDialog addRecensionDialog;
 
     private DatabaseReference databaseReference;
 
@@ -59,7 +69,10 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         cenaPoKilometruSluzbe = (TextView)findViewById(R.id.cenaPoKilometruView);
         brojAutomobilaSluzbe = (TextView)findViewById(R.id.brojAutomobilaView);
 
+        addRecensionShowDialogButton = (Button) findViewById(R.id.addRecensionDialogShowButton);
         callButton = (Button) findViewById(R.id.callButton);
+
+        addRecensionShowDialogButton.setOnClickListener(this);
         callButton.setOnClickListener(this);
 
         ratingBar = (RatingBar)findViewById(R.id.oceniSluzbuView);
@@ -75,13 +88,28 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         setCurrentUserRatingForTaxiService();
         //ratingBar.setRating(getCurrentUserRatingBy(serviceName));
     }
-
     @Override
     public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
         String userEmail = firebaseAuth.getCurrentUser().getEmail();
         String serviceName = intent.getStringExtra("imeSluzbe").toString();
         UserRating userRating = new UserRating(userEmail, serviceName, (Float)v);
         writeUserRatingToDatabase(userRating);
+    }
+    @Override
+    public void onClick(View view) {
+        if(view == addRecensionShowDialogButton)
+        {
+            onAddRecensionDialogShowButton();
+        }
+        else if (view == callButton)
+        {
+            onCallButtonClick();
+        }
+        else if (view == addRecensionButton)
+        {
+            onAddRecensionButton();
+
+        }
     }
 
     private void setProsecnaOcenaSluzbe () {
@@ -116,10 +144,6 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
             }
         });
     }
-    private void writeUserRatingToDatabase(UserRating userRating) {
-        databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
-    }
-
     private void setCurrentUserRatingForTaxiService(){
         String serviceName = intent.getStringExtra("imeSluzbe");
         databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(serviceName).addValueEventListener(new ValueEventListener() {
@@ -139,16 +163,46 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
 
     }
 
-    @Override
-    public void onClick(View view) {
+    private void writeUserRecensionToDatabase(String userRecension){
+        String userGuid = firebaseAuth.getCurrentUser().getUid();
+        String userEmail = firebaseAuth.getCurrentUser().getEmail();
+        Date currentTime = Calendar.getInstance().getTime();
+        String taxiServiceName = intent.getStringExtra("imeSluzbe");
+        UserRecension userRating = new UserRecension(userEmail, userRecension, taxiServiceName, currentTime);
+        databaseReference.child("recensions").child(userGuid).child(taxiServiceName).child(currentTime.toString()).setValue(userRating);
+    }
+    private void writeUserRatingToDatabase(UserRating userRating) {
+        databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
+    }
+
+    private void onCallButtonClick(){
         callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + intent.getStringExtra("brojTelefona")));
 
         if (ContextCompat.checkSelfPermission(TaxiInfoActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(TaxiInfoActivity.this, new String[]{Manifest.permission.CALL_PHONE},CALL_PHONE);
-        }
-        else
-        {
+            ActivityCompat.requestPermissions(TaxiInfoActivity.this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE);
+        } else {
             startActivity(callIntent);
         }
     }
+    private void onAddRecensionDialogShowButton(){
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(TaxiInfoActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_add_recension,null);
+        addRecensionButton = (Button) mView.findViewById(R.id.addRecensionButton);
+        userRecensionTextView = (TextView) mView.findViewById(R.id.recensionField);
+
+        addRecensionButton.setOnClickListener(this);
+        mbuilder.setView(mView);
+        addRecensionDialog = mbuilder.create();
+        addRecensionDialog.show();
+    }
+    private void onAddRecensionButton(){
+        String userRecension = userRecensionTextView.getText().toString();
+        if(!userRecension.isEmpty()) {
+            writeUserRecensionToDatabase(userRecension);
+            addRecensionDialog.dismiss();
+        } else {
+            Toast.makeText(this, "Your recension cannot be empty!", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }
