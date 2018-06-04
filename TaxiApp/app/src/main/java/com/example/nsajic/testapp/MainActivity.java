@@ -67,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
@@ -88,12 +96,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void switchToAboutActivity() {
-        finish();
         startActivity(new Intent(this, AboutActivity.class));
     }
 
     private void switchToFeedbackActivity() {
-        finish();
         startActivity(new Intent(this, FeedbackActivity.class));
     }
 
@@ -108,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void switchToUserGuide(){
-        finish();
         startActivity(new Intent(this, UserGuid.class));
     }
 }

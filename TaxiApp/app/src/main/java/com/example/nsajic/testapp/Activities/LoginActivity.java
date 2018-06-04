@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                         if(task.isSuccessful()){
                             switchToMainActivity();
                         }else{
-                            Toast.makeText(LoginActivity.this, "Bad password!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Bad credentials!", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -100,7 +100,6 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     }
 
     private void switchToRegisterActivity(){
-        finish();
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

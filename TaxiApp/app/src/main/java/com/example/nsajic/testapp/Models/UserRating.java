@@ -11,6 +11,8 @@ public class UserRating {
         this.value = value;
     }
 
+    public UserRating(){}
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -23,9 +25,7 @@ public class UserRating {
         return taxiServiceName;
     }
 
-    public void setTaxiServiceName(String taxiServiceName) {
-        this.taxiServiceName = taxiServiceName;
-    }
+    public void setTaxiServiceName(String taxiServiceName) {this.taxiServiceName = taxiServiceName; }
 
     public Float getValue() {
         return value;

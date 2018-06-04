@@ -1,5 +1,7 @@
 package com.example.nsajic.testapp.Models;
 
+import android.widget.CheckBox;
+
 /**
  * Created by nsajic on 4/17/2018.
  */
@@ -10,15 +12,17 @@ public class TaxiSluzba {
     private Double ocena;
     private Double cenaPoKilometru;
     private Integer brojAutomobila;
+    private Boolean favouriteChecked;
 
     public TaxiSluzba() {}
 
-    public TaxiSluzba(String ime, String brojTelefona, Double ocena, Double cenaPoKilometru, int brojAutomobila) {
+    public TaxiSluzba(String ime, String brojTelefona, Double ocena, Double cenaPoKilometru, int brojAutomobila, Boolean favouriteChecked) {
         this.ime = ime;
         this.brojTelefona = brojTelefona;
         this.ocena = ocena;
         this.brojAutomobila = brojAutomobila;
         this.cenaPoKilometru = cenaPoKilometru;
+        this.favouriteChecked = favouriteChecked;
     }
     public TaxiSluzba(String ime, String brojTelefona, Double ocena) {
         this.ime = ime;
@@ -60,5 +64,13 @@ public class TaxiSluzba {
 
     public void setOcena(Double ocena) {
         this.ocena = ocena;
+    }
+
+    public Boolean getFavouriteChecked() {
+        return favouriteChecked;
+    }
+
+    public void setFavouriteChecked(Boolean favouriteChecked) {
+        this.favouriteChecked = favouriteChecked;
     }
 }

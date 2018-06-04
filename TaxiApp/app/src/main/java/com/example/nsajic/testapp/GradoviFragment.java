@@ -96,10 +96,10 @@ public class GradoviFragment extends Fragment {
         Grad gradBG = new Grad("Beograd", "11000");
         Grad gradSM = new Grad("Sremska Mitrovica", "22000");
 
-        TaxiSluzba taxi1 = new TaxiSluzba("SasaTaxi", "+381659300975", 5.0, 80.0, 9);
-        TaxiSluzba taxi2 = new TaxiSluzba("RedTaxi", "+38121445577", 4.0, 85.0, 5);
-        TaxiSluzba taxi3 = new TaxiSluzba("Delta taxi", "+38166355555", 3.0, 70.0, 8);
-        TaxiSluzba taxi4 = new TaxiSluzba("Grand taxi", "+38163330330", 4.5, 80.0, 10);
+        TaxiSluzba taxi1 = new TaxiSluzba("SasaTaxi", "+381659300975", 5.0, 80.0, 9, false);
+        TaxiSluzba taxi2 = new TaxiSluzba("RedTaxi", "+38121445577", 4.0, 85.0, 5, false);
+        TaxiSluzba taxi3 = new TaxiSluzba("Delta taxi", "+38166355555", 3.0, 70.0, 8, false);
+        TaxiSluzba taxi4 = new TaxiSluzba("Grand taxi", "+38163330330", 4.5, 80.0, 10, false);
 
         //dataBaseReference.child("gradovi").child(gradNS.getPostanskiBroj()).setValue(gradNS);
         //dataBaseReference.child("gradovi").child(gradBG.getPostanskiBroj()).setValue(gradBG);
