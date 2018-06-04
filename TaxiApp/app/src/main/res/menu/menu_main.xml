@@ -36,8 +36,10 @@
 
     <item
         android:id="@+id/action_search"
+        android:title="Search"
         android:orderInCategory="100"
         android:icon="@drawable/search"
+        app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom" />
 
 </menu>
