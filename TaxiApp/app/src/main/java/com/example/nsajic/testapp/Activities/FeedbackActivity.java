@@ -76,7 +76,6 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void switchToMainActivity(){
-        finish();
         startActivity(new Intent(this, MainActivity.class));
     }
 

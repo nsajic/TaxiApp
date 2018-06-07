@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.nsajic.testapp.Models.TaxiSluzba;
 import com.example.nsajic.testapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
     private ArrayList<TaxiSluzba> sluzbe;
+    private DatabaseReference dataBaseReference;
+    private FirebaseAuth firebaseAuth;
     Context mContext;
 
     private static class ViewHolder{
@@ -30,7 +36,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
         TextView cenaPoKilometru;
         TextView brojAutomobila;
         TextView brojTelefona;
-        ImageButton favouriteBtn;
+        CheckBox favouriteChecked;
     }
 
     public TaxiSluzbaAdapter(ArrayList<TaxiSluzba> sluzbe, Context context){
@@ -57,9 +63,11 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View vi = convertView;
         final ViewHolder holder;
+        dataBaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         try{
             if(convertView == null){
@@ -69,14 +77,32 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
                 holder = new ViewHolder();
 
                 holder.nazivSluzbe = (TextView) vi.findViewById(R.id.imeSluzbe);
-                holder.ocena = (TextView) vi.findViewById(R.id.ocenaSluzbe);
+                //holder.ocena = (TextView) vi.findViewById(R.id.);
                 holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
                 holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
-                //holder.favouriteBtn = (ImageButton) vi.findViewById(R.id.favorite);
+                holder.favouriteChecked = (CheckBox) vi.findViewById(R.id.favouriteChecked);
+                holder.favouriteChecked.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //dataBaseReference.child("favouriteServices").child(firebaseAuth.getCurrentUser().getUid()).setValue(sluzbe.get(position).getIme());
+
+                        if(((CheckBox) view).isChecked()) {
+                            dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").child(sluzbe.get(position).getIme()).setValue(sluzbe.get(position).getIme());
+                        }else{
+                            dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").child(sluzbe.get(position).getIme()).removeValue();
+                        }
+                    }
+                });
 
 
                 vi.setTag(holder);
             }else{
+                vi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.print("aaa");
+                    }
+                });
                 holder = (ViewHolder) vi.getTag();
             }
 
@@ -87,6 +113,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
             holder.ocena.setText(ocenaStr);
             holder.cenaPoKilometru.setText(cenaStr);
             holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
+            //holder.favouriteChecked.setChecked(sluzbe.get(position).getFavouriteChecked());
             /*holder.favouriteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
