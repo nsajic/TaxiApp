@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp">
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:text="email"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/userRecension"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rec"
+        android:textSize="25sp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintTop_toBottomOf="@id/userEmail" />
+</android.support.constraint.ConstraintLayout>

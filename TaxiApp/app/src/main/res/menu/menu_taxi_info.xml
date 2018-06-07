@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="com.example.nsajic.testapp.TaxiInfoActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_showTaxiServiceRecensions"
+        android:orderInCategory="100"
+        android:title="View Recensions"
+        app:showAsAction="never" >
+    </item>
+</menu>
