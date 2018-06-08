@@ -188,13 +188,13 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
 
     }
 
-    private void writeUserRecensionToDatabase(String userRecension){
+    private void writeUserRecensionToDatabase(String userRecensionContent){
         String userGuid = firebaseAuth.getCurrentUser().getUid();
         String userEmail = firebaseAuth.getCurrentUser().getEmail();
         Date currentTime = Calendar.getInstance().getTime();
         String taxiServiceName = intent.getStringExtra("imeSluzbe");
-        UserRecension userRating = new UserRecension(userEmail, userRecension, taxiServiceName, currentTime);
-        databaseReference.child("recensions").child(userGuid).child(taxiServiceName).child(currentTime.toString()).setValue(userRating);
+        UserRecension userRecension = new UserRecension(userEmail, userRecensionContent, taxiServiceName, currentTime);
+        databaseReference.child("recensions").child(userGuid).child(taxiServiceName).child(currentTime.toString()).setValue(userRecension);
     }
     private void writeUserRatingToDatabase(UserRating userRating) {
         databaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("ocene").child(userRating.getTaxiServiceName()).setValue(userRating);
