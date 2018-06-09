@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.ContactsContract;
+import android.service.autofill.Dataset;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import com.example.nsajic.testapp.MainActivity;
 import com.example.nsajic.testapp.Models.Grad;
 import com.example.nsajic.testapp.Models.TaxiSluzba;
 import com.example.nsajic.testapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +35,11 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
 
     private static final int CALL_PHONE = 1;
     ArrayList<TaxiSluzba> taxiSluzbeNS = new ArrayList<TaxiSluzba>();
+    ArrayList<String> omiljeneSluzbe = new ArrayList<String>();
     ListView listViewSluzbe;
+
     private DatabaseReference dataBaseReference;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +49,101 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String postanskiBroj = intent.getStringExtra("postanskiBroj");
+        final String postanskiBroj = intent.getStringExtra("postanskiBroj");
 
+        firebaseAuth = FirebaseAuth.getInstance();
         dataBaseReference = FirebaseDatabase.getInstance().getReference();
 
-        dataBaseReference.child("gradovi").child(postanskiBroj).child("taxiSluzbe").addValueEventListener(new ValueEventListener() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                dataBaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        taxiSluzbeNS.removeAll(taxiSluzbeNS);
+                        omiljeneSluzbe.removeAll(omiljeneSluzbe);
+
+                        Iterable<DataSnapshot> omiljeneSluzbeDB = dataSnapshot.child("korisnici").getChildren();
+                        Iterable<DataSnapshot> gradovi = dataSnapshot.child("gradovi").getChildren();
+                        //Iterable<DataSnapshot> gradovi = dataSnapshot.getChildren();
+
+                        for(DataSnapshot coek: omiljeneSluzbeDB){
+                            if(coek.getKey().equals(firebaseAuth.getCurrentUser().getUid())) {
+                                for (DataSnapshot sluzba : coek.child("omiljeneSluzbe").getChildren()) {
+                                    omiljeneSluzbe.add(sluzba.getValue(String.class));
+                                }
+                            }
+                        }
+
+                        for(DataSnapshot grad : gradovi){
+                            if(grad.getKey().equals(postanskiBroj)) {
+                                for (DataSnapshot sluzbica : grad.child("taxiSluzbe").getChildren()) {
+                                    TaxiSluzba taxiSluzba = sluzbica.getValue(TaxiSluzba.class);
+                                    if (omiljeneSluzbe.contains(taxiSluzba.getIme())) {
+                                        taxiSluzba.setFavouriteChecked(true);
+                                    } else {
+                                        taxiSluzba.setFavouriteChecked(false);
+                                    }
+
+                                    taxiSluzbeNS.add(taxiSluzba);
+                                }
+                            }
+                        }
+
+                /*
+                dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                if(omiljeneSluzbe.size() == 0) {
+                    for (DataSnapshot child : children) {
+                        omiljeneSluzbe.add(child.getValue(String.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+                for(DataSnapshot grad : gradovi){
+                    if(grad.getKey().equals("gradovi")) {
+                        for (DataSnapshot sluzba : grad.getChildren()) {
+                                for (DataSnapshot sluzbica : sluzba.getChildren()) {
+                                    if (sluzbica.getKey().equals("taxiSluzbe")) {
+                                        for(DataSnapshot jednaSluzba : sluzbica.getChildren()) {
+                                            TaxiSluzba taxiSluzba = jednaSluzba.getValue(TaxiSluzba.class);
+                                            if (omiljeneSluzbe.contains(taxiSluzba.getIme())) {
+                                                taxiSluzba.setFavouriteChecked(true);
+                                            } else {
+                                                taxiSluzba.setFavouriteChecked(false);
+                                            }
+                                            taxiSluzbeNS.add(taxiSluzba);
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                }*/
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+
+
+        /*dataBaseReference.child("gradovi").child(postanskiBroj).child("taxiSluzbe").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
@@ -54,6 +151,11 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
                 if(taxiSluzbeNS.size() == 0) {
                     for (DataSnapshot child : children) {
                         TaxiSluzba taxiSluzba = child.getValue(TaxiSluzba.class);
+                        if(omiljeneSluzbe.contains(taxiSluzba.getIme())){
+                            taxiSluzba.setFavouriteChecked(true);
+                        }else{
+                            taxiSluzba.setFavouriteChecked(false);
+                        }
                         taxiSluzbeNS.add(taxiSluzba);
                     }
                 }
@@ -64,6 +166,24 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
 
             }
         });
+
+        dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                if(omiljeneSluzbe.size() == 0) {
+                    for (DataSnapshot child : children) {
+                        omiljeneSluzbe.add(child.getValue(String.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
 
         listViewSluzbe = (ListView)findViewById(R.id.taxiSluzbe_listview);
         listViewSluzbe.setAdapter(new TaxiSluzbaAdapter(taxiSluzbeNS, this));

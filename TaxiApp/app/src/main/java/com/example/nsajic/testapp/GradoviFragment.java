@@ -48,6 +48,9 @@ public class GradoviFragment extends Fragment {
 
         //GetGradovi();
 
+        GradoviAdapter ga = new GradoviAdapter(gradovi, getActivity());
+        final GradoviAdapter finalGa = ga;
+
         dataBaseReference.child("gradovi").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -59,6 +62,8 @@ public class GradoviFragment extends Fragment {
                         gradovi.add(grad);
                     }
                 }
+
+                finalGa.notifyDataSetChanged();
             }
 
             @Override
@@ -68,7 +73,7 @@ public class GradoviFragment extends Fragment {
         });
 
         ListView lv = (ListView)view.findViewById(R.id.gradovi_listview);
-        lv.setAdapter(new GradoviAdapter(gradovi, getActivity()));
+        lv.setAdapter(ga);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

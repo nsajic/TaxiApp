@@ -9,6 +9,8 @@ public class UserRecension {
     private String taxiServiceName;
     private Date dateCreated;
 
+    public UserRecension(){};
+
     public UserRecension(String userEmail, String content, String taxiServiceName, Date dateCreated) {
         this.userEmail = userEmail;
         this.content = content;
