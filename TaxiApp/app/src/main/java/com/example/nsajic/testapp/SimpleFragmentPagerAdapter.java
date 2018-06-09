@@ -24,7 +24,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return new GradoviFragment();
         } else {
-            return new TestFragment();
+            return new FavouriteServicesFragment();
         }
     }
 

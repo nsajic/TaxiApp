@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.nsajic.testapp.GradoviFragment;
 import com.example.nsajic.testapp.MapFragment;
-import com.example.nsajic.testapp.TestFragment;
+import com.example.nsajic.testapp.FavouriteServicesFragment;
 
 /**
  * Created by nsajic on 4/17/2018.
@@ -26,7 +26,7 @@ public class ViewPagerAdapter  extends FragmentPagerAdapter {
         }
         else if (position == 1)
         {
-            fragment = new TestFragment();
+            fragment = new FavouriteServicesFragment();
         }
         else if (position == 2)
         {

@@ -77,7 +77,7 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
                 holder = new ViewHolder();
 
                 holder.nazivSluzbe = (TextView) vi.findViewById(R.id.imeSluzbe);
-                //holder.ocena = (TextView) vi.findViewById(R.id.);
+                //holder.ocena = (TextView) vi.findViewById(R.id.oce);
                 holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
                 holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
                 holder.favouriteChecked = (CheckBox) vi.findViewById(R.id.favouriteChecked);
@@ -109,8 +109,10 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
             String ocenaStr = sluzbe.get(position).getOcena()+"";
             String cenaStr = sluzbe.get(position).getCenaPoKilometru()+"";
 
+
+            holder.favouriteChecked.setChecked(sluzbe.get(position).getFavouriteChecked());
             holder.nazivSluzbe.setText(sluzbe.get(position).getIme());
-            holder.ocena.setText(ocenaStr);
+            //holder.ocena.setText(ocenaStr);
             holder.cenaPoKilometru.setText(cenaStr);
             holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
             //holder.favouriteChecked.setChecked(sluzbe.get(position).getFavouriteChecked());
