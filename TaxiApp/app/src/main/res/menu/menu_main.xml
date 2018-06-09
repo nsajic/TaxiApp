@@ -4,6 +4,12 @@
     xmlns:tools="com.example.nsajic.testapp.MainActivity">
 
     <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="100"
+        android:title="@string/action_filter"
+        app:showAsAction="never" >
+    </item>
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

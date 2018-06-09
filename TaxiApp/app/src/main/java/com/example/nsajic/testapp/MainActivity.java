@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 
 import com.example.nsajic.testapp.Activities.AboutActivity;
 import com.example.nsajic.testapp.Activities.FeedbackActivity;
+import com.example.nsajic.testapp.Activities.FilterActivity;
 import com.example.nsajic.testapp.Activities.LoginActivity;
 import com.example.nsajic.testapp.Activities.RegisterActivity;
 import com.example.nsajic.testapp.Adapters.ViewPagerAdapter;
@@ -91,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_feedback:
                 switchToFeedbackActivity();
                 return true;
+            case R.id.action_filter:
+                switchToFilter();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -115,5 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void switchToUserGuide(){
         startActivity(new Intent(this, UserGuid.class));
+    }
+
+    private void switchToFilter(){
+        startActivity(new Intent(this, FilterActivity.class));
     }
 }
