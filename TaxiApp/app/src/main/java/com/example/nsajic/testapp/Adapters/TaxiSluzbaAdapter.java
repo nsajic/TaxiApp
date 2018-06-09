@@ -78,8 +78,8 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
                 holder.nazivSluzbe = (TextView) vi.findViewById(R.id.imeSluzbe);
                 //holder.ocena = (TextView) vi.findViewById(R.id.oce);
-                holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
-                holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
+                //holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
+                //holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
                 holder.favouriteChecked = (CheckBox) vi.findViewById(R.id.favouriteChecked);
                 holder.favouriteChecked.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -97,13 +97,14 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
 
                 vi.setTag(holder);
             }else{
-                vi.setOnClickListener(new View.OnClickListener() {
+                holder = (ViewHolder) vi.getTag();
+                /*vi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         System.out.print("aaa");
                     }
                 });
-                holder = (ViewHolder) vi.getTag();
+                holder = (ViewHolder) vi.getTag();*/
             }
 
             String ocenaStr = sluzbe.get(position).getOcena()+"";
@@ -113,8 +114,8 @@ public class TaxiSluzbaAdapter extends ArrayAdapter<TaxiSluzba>{
             holder.favouriteChecked.setChecked(sluzbe.get(position).getFavouriteChecked());
             holder.nazivSluzbe.setText(sluzbe.get(position).getIme());
             //holder.ocena.setText(ocenaStr);
-            holder.cenaPoKilometru.setText(cenaStr);
-            holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
+            //holder.cenaPoKilometru.setText(cenaStr);
+            //holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
             //holder.favouriteChecked.setChecked(sluzbe.get(position).getFavouriteChecked());
             /*holder.favouriteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
