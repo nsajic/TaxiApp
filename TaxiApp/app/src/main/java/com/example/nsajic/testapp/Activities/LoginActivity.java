@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setTitle(R.string.login_activity_tittle);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

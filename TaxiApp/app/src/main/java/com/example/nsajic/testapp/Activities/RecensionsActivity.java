@@ -31,7 +31,7 @@ public class RecensionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recensions);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        getSupportActionBar().setTitle("Taxi sluzbe");
+        getSupportActionBar().setTitle(R.string.recensions_activity_tittle);
         recensionsListView = (ListView)findViewById(R.id.recensionsListView);
         recensions = new ArrayList<UserRecension>();
         setUserRecensions();

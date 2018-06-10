@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pronađi taksi</string>
+    <string name="logOut">Odjavi se</string>
+    <string name="settings">Podešavanja</string>
+    <string name="about">O aplikaciji</string>
+    <string name="insertFeedback">Unesite fidbek...</string>
+    <string name="insertRecension">Unesite recenziju...</string>
+    <string name="feedback">Pošaljite fidbek</string>
+    <string name="gradovi">Gradovi</string>
+    <string name="omiljeniTaxi">Omiljeni taksi</string>
+    <string name="action_settings">Podešavanja</string>
+    <string name="action_userguide">Korisničko uputstvo</string>
+    <string name="action_about">O aplikaciji</string>
+    <string name="title_activity_login">Prijava</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Lozinka (opciono)</string>
+    <string name="action_sign_in">Prijava ili registracija</string>
+    <string name="action_sign_in_short">Prijava</string>
+    <string name="error_invalid_email">Nevalidan email</string>
+    <string name="error_invalid_password">Prekratka lozinka</string>
+    <string name="error_incorrect_password">Nevalidna lozinka</string>
+    <string name="error_field_required">Ovo polje je obavezno</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="password">Lozinka</string>
+    <string name="name">Ime:</string>
+    <string name="authors">Autori:</string>
+    <string name="filter_city_taxi">Grad/taksi</string>
+    <string name="filter_search_by_price">Pretrazi po ceni</string>
+    <string name="filter_search">Pretrazi</string>
+    <string name="login_login">Prijavi se</string>
+    <string name="login_dont_have_account">Nemate nalog? Kreirajte ovde</string>
+    <string name="register_insert_password">Unesite lozinku</string>
+    <string name="register_confirm_password">Potvrdite lozinku</string>
+    <string name="register_sign_up">Prijavi se</string>
+    <string name="taxi_info_name">Naziv:</string>
+    <string name="taxi_info_average_rating">Prosecna ocena:</string>
+    <string name="taxi_info_car_count">Broj automobila:</string>
+    <string name="taxi_info_price_km">Cena/km:</string>
+    <string name="taxi_info_evaluate">Oceni:</string>
+    <string name="taxi_info_add_recension">Dodaj recenziju</string>
+    <string name="taxi_info_call">Pozovi</string>
+    <string name="dialog_add_recension_add_recension">Dodaj recenziju</string>
+    <string name="action_user_guide">Korisnicko uputstvo</string>
+    <string name="action_logout">Odjavi se</string>
+    <string name="main_menu_search">Pretraga</string>
+    <string name="action_view_recensions">Vidi recenzije</string>
+    <string name="taxi_info_phone_number">Broj telefona:</string>
+    <string name="filter_search_by_name">Pretrazi po nazivu:</string>
+    <string name="action_filter">Filtriranje</string>
+
+    <array name="filter_spinner">
+        <item>Grad</item>
+        <item>Taksi</item>
+    </array>
+
+    <string name="about_tittle">O aplikaciji</string>
+    <string name="title_activity_feedback">Fidbek</string>
+    <string name="hello_blank_fragment">Prazan</string>
+    <string name="filter_activity_tittle">Filtriranje</string>
+    <string name="login_activity_tittle">Prijava</string>
+    <string name="recensions_activity_tittle">Recenzije</string>
+    <string name="register_activity_tittle">Registracija</string>
+    <string name="taxi_sluzbe_title">Taksi službe</string>
+    <string name="view_pager_favourite_taxi_service">Omiljeni taxi</string>
+    <string name="view_pager_cities">Gradovi</string>
+    <string name="view_pager_taxi_stops">Stajališta</string>
+</resources>

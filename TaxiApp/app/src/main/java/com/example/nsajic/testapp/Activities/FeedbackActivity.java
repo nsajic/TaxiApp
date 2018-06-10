@@ -29,7 +29,7 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-        getSupportActionBar().setTitle("Send feedback");
+        getSupportActionBar().setTitle(R.string.title_activity_feedback);
 
         dataBaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();

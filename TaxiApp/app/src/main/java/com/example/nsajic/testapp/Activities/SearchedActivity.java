@@ -46,7 +46,7 @@ public class SearchedActivity extends AppCompatActivity {
         price = intent.getDoubleExtra("price", 0);
         postanskiBroj = intent.getStringExtra("selectedCityPC");
 
-        if(cityTaxi.equals("City")){
+        if(cityTaxi.equals(getResources().getStringArray(R.array.filter_spinner)[0])){
             databaseReference.child("gradovi").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -84,7 +84,7 @@ public class SearchedActivity extends AppCompatActivity {
             });
 
 
-        }else if(cityTaxi.equals(("Taxi"))){
+        }else if(cityTaxi.equals((getResources().getStringArray(R.array.filter_spinner)[1]))){
             databaseReference.child("gradovi").child(postanskiBroj).child("taxiSluzbe").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

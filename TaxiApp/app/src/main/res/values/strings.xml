@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestApp</string>
+    <string name="app_name">Find taxi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -13,10 +13,10 @@
     <string name="feedback">Send feedback</string>
 
     <!-- Category name for useful info [CHAR LIMIT=20] -->
-    <string name="gradovi">Gradovi</string>
+    <string name="gradovi">Cities</string>
 
     <!-- Category name for places [CHAR LIMIT=20] -->
-    <string name="omiljeniTaxi">Omiljeni taxi</string>
+    <string name="omiljeniTaxi">Favourite taxi</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_filter">Filter</string>
@@ -36,12 +36,47 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="title_activity_feedback">Feedback</string>
     <string name="title_activity_maps">Map</string>
+    <string name="password">Password</string>
 
-    <string-array name="gradSluzba">
+    <array name="filter_spinner">
         <item>City</item>
         <item>Taxi</item>
-    </string-array>
+    </array>
+
+    <string name="name">Name:</string>
+    <string name="authors">Authors:</string>
+    <string name="filter_city_taxi">City/taxi</string>
+    <string name="filter_search_by_name">Search by name</string>
+    <string name="filter_search_by_price">Search by price</string>
+    <string name="filter_search">Search</string>
+    <string name="login_login">Login</string>
+    <string name="login_dont_have_account">Dont have account? Create account here</string>
+    <string name="register_insert_password">Insert password</string>
+    <string name="register_confirm_password">Confirm password</string>
+    <string name="register_sign_up">Sign up</string>
+    <string name="taxi_info_name">Name:</string>
+    <string name="taxi_info_average_rating">Average rating:</string>
+    <string name="taxi_info_car_count">Car count:</string>
+    <string name="taxi_info_price_km">Price/km:</string>
+    <string name="taxi_info_phone_number">Phone number:</string>
+    <string name="taxi_info_evaluate">Evaluate:</string>
+    <string name="taxi_info_add_recension">Add recension</string>
+    <string name="taxi_info_call">Call</string>
+    <string name="dialog_add_recension_add_recension">Add recension</string>
+    <string name="action_user_guide">User guide</string>
+    <string name="action_logout">Logout</string>
+    <string name="main_menu_search">Search</string>
+    <string name="action_view_recensions">View recensions</string>
+    <string name="about_tittle">About</string>
+    <string name="filter_activity_tittle">Filter</string>
+    <string name="login_activity_tittle">Login</string>
+    <string name="recensions_activity_tittle">Recensions</string>
+    <string name="register_activity_tittle">Sign up</string>
+    <string name="taxi_sluzbe_title">Taxi services</string>
+    <string name="view_pager_cities">Cities</string>
+    <string name="view_pager_favourite_taxi_service">Favorite</string>
+    <string name="view_pager_taxi_stops">Taxi stops</string>
 
 </resources>
