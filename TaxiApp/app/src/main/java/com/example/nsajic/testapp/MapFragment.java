@@ -39,14 +39,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private static final String FINE_LOCATION = android.Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = android.Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final String FINE_LOCATION = ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
 
@@ -69,12 +72,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         dataBaseReference = FirebaseDatabase.getInstance().getReference();
-
+/*
         TaxiStajalista ts1 = new TaxiStajalista(10, 10);
         TaxiStajalista ts2 = new TaxiStajalista("Milana Skrgica 1, Sremska Mitrovica, Srbija");
         taxiStajalista.add(ts1);
         taxiStajalista.add(ts2);
-/*
+*/
         dataBaseReference.child("taxiStajalista").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,7 +96,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             }
         });
-*/
+
         getLocationPermission();
 
         return view;
@@ -113,9 +116,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if(mLocationPermissionsGranted){
             getDeviceLocation();
 
-            if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+            if (ActivityCompat.checkSelfPermission(this.getActivity(), ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getActivity(),
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
             map.setMyLocationEnabled(true);
@@ -147,8 +150,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private void getLocationPermission(){
         //TODO: Proveriti da li je prihvatio koriscenje lokacija telefona
-        String[] permissions = {android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION};
+        String[] permissions = {ACCESS_FINE_LOCATION,
+                                ACCESS_COARSE_LOCATION};
 
         if(ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
