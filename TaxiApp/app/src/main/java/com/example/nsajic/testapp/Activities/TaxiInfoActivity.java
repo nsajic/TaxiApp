@@ -59,7 +59,6 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taxi_info);
-        getSupportActionBar().setTitle("Info");
         firebaseAuth = FirebaseAuth.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -87,6 +86,8 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
         brojTelefonaSluzbe.setText(intent.getStringExtra("brojTelefona"));
 
         String serviceName = intent.getStringExtra("imeSluzbe");
+
+        getSupportActionBar().setTitle(serviceName);
         setCurrentUserRatingForTaxiService();
         //ratingBar.setRating(getCurrentUserRatingBy(serviceName));
     }
@@ -159,7 +160,7 @@ public class TaxiInfoActivity extends AppCompatActivity implements RatingBar.OnR
                 }
                 if(sum != 0) {
                     Float avg = sum/userRatingsCount;
-                    ocenaSluzbe.setText(avg.toString());
+                    ocenaSluzbe.setText(String.format("%.2f", avg));
                 }
             }
 

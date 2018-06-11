@@ -45,7 +45,7 @@ public class TaxiSluzbeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taxi_sluzbe);
-        getSupportActionBar().setTitle("Taxi sluzbe");
+        getSupportActionBar().setTitle(R.string.taxi_sluzbe_title);
 
         Intent intent = getIntent();
 

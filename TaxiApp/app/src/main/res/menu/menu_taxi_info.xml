@@ -6,7 +6,6 @@
     <item
         android:id="@+id/action_showTaxiServiceRecensions"
         android:orderInCategory="100"
-        android:title="View Recensions"
-        app:showAsAction="never" >
-    </item>
+        android:title="@string/action_view_recensions"
+        app:showAsAction="never"></item>
 </menu>

@@ -1,11 +1,11 @@
 package com.example.nsajic.testapp.Activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class FilterActivity extends AppCompatActivity{
@@ -40,7 +39,7 @@ public class FilterActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-        getSupportActionBar().setTitle("Search");
+        getSupportActionBar().setTitle(R.string.filter_activity_tittle);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -71,10 +70,13 @@ public class FilterActivity extends AppCompatActivity{
         cityTaxiSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(adapterView.getSelectedItem().equals("Taxi")){
 
+                if(adapterView.getSelectedItem().equals(getResources().getStringArray(R.array.filter_spinner)[1])){
                     priceText.setVisibility(View.VISIBLE);
                     gradoviSpinner.setVisibility(View.VISIBLE);
+                } else if (adapterView.getSelectedItem().equals(getResources().getStringArray(R.array.filter_spinner)[0])) {
+                    priceText.setVisibility(View.INVISIBLE);
+                    gradoviSpinner.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -93,7 +95,7 @@ public class FilterActivity extends AppCompatActivity{
 
                 intent.putExtra("cityTaxi", selectedcityTaxi);
                 intent.putExtra("name", nameText.getText().toString());
-                if(selectedcityTaxi.equals("Taxi")) {
+                if(selectedcityTaxi.equals(getResources().getStringArray(R.array.filter_spinner)[1])) {
                     intent.putExtra("price", Double.parseDouble(priceText.getText().toString()));
                     intent.putExtra("selectedCityPC", ((Grad) gradoviSpinner.getSelectedItem()).getPostanskiBroj());
                 }

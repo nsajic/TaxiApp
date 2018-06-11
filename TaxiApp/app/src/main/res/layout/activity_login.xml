@@ -21,29 +21,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="E-mail" />
+            android:hint="@string/prompt_email" />
 
         <EditText
             android:id="@+id/passwordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Password"
-            android:inputType="textPassword"/>
+            android:hint="@string/password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Login" />
+            android:text="@string/login_login" />
 
         <TextView
-            android:textAlignment="center"
-            android:text="Don't have account? Create account here"
             android:id="@+id/signUpTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/login_dont_have_account"
+            android:textAlignment="center" />
 
 
     </LinearLayout>
