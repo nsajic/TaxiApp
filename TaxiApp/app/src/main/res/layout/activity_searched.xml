@@ -7,7 +7,7 @@
     tools:context=".Activities.SearchedActivity">
 
     <ListView
-        android:id="@+id/gradovi_listview"
+        android:id="@+id/finded_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="1sp"/>
