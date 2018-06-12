@@ -60,7 +60,7 @@
     <string name="taxi_info_average_rating">Average rating:</string>
     <string name="taxi_info_car_count">Car count:</string>
     <string name="taxi_info_price_km">Price/km:</string>
-    <string name="taxi_info_phone_number">Phone number:</string>
+    <string name="taxi_info_phone_number">Phone:</string>
     <string name="taxi_info_evaluate">Evaluate:</string>
     <string name="taxi_info_add_recension">Add recension</string>
     <string name="taxi_info_call">Call</string>
