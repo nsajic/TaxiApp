@@ -92,8 +92,6 @@ public class SearchedActivity extends AppCompatActivity {
 
                 }
             });
-
-
         }else if(cityTaxi.equals((getResources().getStringArray(R.array.filter_spinner)[1]))){
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override

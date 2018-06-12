@@ -105,63 +105,6 @@ public class FavouriteServicesFragment extends Fragment {
                     }
                 });
 
-
-
-        /*try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
-
-
-
-
-       /* dataBaseReference.child("korisnici").child(firebaseAuth.getCurrentUser().getUid()).child("omiljeneSluzbe").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                if(omiljeneSluzbe.size() == 0) {
-                    for (DataSnapshot child : children) {
-                        omiljeneSluzbe.add(child.getValue(String.class));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        dataBaseReference.child("gradovi").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                if(taxiSluzbe.size() == 0) {
-                    for (DataSnapshot child : children) {
-                        for (DataSnapshot childTaxi : child.child("taxiSluzbe").getChildren()){
-
-                                TaxiSluzba tempSluzba = childTaxi.getValue(TaxiSluzba.class);
-
-                                if(omiljeneSluzbe.contains(tempSluzba.getIme())){
-                                    taxiSluzbe.add(tempSluzba);
-                                }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-
-
         ListView lv = (ListView)view.findViewById(R.id.favourite_services_listview);
         lv.setAdapter(fsa);
 
