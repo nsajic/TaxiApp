@@ -1,14 +1,20 @@
 package com.example.nsajic.testapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.nsajic.testapp.Adapters.GradSearchAdapter;
 import com.example.nsajic.testapp.Models.Grad;
@@ -32,12 +38,16 @@ public class FilterActivity extends AppCompatActivity{
     private Button searchButton;
 
     private List<Grad> cities = new ArrayList<>();
+    private ArrayList<String> citiesSpinner = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
     private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Context context = this;
+
         setContentView(R.layout.activity_filter);
         getSupportActionBar().setTitle(R.string.filter_activity_tittle);
 
@@ -57,6 +67,15 @@ public class FilterActivity extends AppCompatActivity{
                 for (DataSnapshot gradUidSnapsot : gradUids) {
                     cities.add(gradUidSnapsot.getValue(Grad.class));
                 }
+
+                for(Grad g: cities){
+                    citiesSpinner.add(g.getIme() + " #" + g.getPostanskiBroj());
+                }
+
+                adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, citiesSpinner);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                gradoviSpinner.setAdapter(adapter);
             }
 
             @Override
@@ -64,8 +83,6 @@ public class FilterActivity extends AppCompatActivity{
 
             }
         });
-
-        gradoviSpinner.setAdapter(new GradSearchAdapter(cities, this));
 
         cityTaxiSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,13 +113,20 @@ public class FilterActivity extends AppCompatActivity{
                 intent.putExtra("cityTaxi", selectedcityTaxi);
                 intent.putExtra("name", nameText.getText().toString());
                 if(selectedcityTaxi.equals(getResources().getStringArray(R.array.filter_spinner)[1])) {
-                    intent.putExtra("price", Double.parseDouble(priceText.getText().toString()));
-                    intent.putExtra("selectedCityPC", ((Grad) gradoviSpinner.getSelectedItem()).getPostanskiBroj());
+                    String postanskiBroj = gradoviSpinner.getSelectedItem().toString().split("#")[1].trim();
+                    String price = priceText.getText().toString();
+
+                    intent.putExtra("selectedCityPC", postanskiBroj);
+
+                    if(!price.isEmpty()){
+                        intent.putExtra("price", Double.parseDouble(price));
+                    }else{
+                        intent.putExtra("price", Double.MAX_VALUE);
+                    }
                 }
 
                 startActivity(intent);
             }
         });
     }
-
 }
