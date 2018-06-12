@@ -26,6 +26,9 @@ public class RecensionsActivity extends AppCompatActivity {
     private ListView recensionsListView;
     private ArrayList<UserRecension> recensions;
 
+    RecensionsAdapter ra = null;
+    //final RecensionsAdapter finalRa = ra;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +37,11 @@ public class RecensionsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.recensions_activity_tittle);
         recensionsListView = (ListView)findViewById(R.id.recensionsListView);
         recensions = new ArrayList<UserRecension>();
-        setUserRecensions();
-        recensionsListView.setAdapter(new RecensionsAdapter(recensions, this));
-    }
-    private void setUserRecensions(){
+
+        ra = new RecensionsAdapter(recensions, this);
+        final RecensionsAdapter finalRa = ra;
+        recensionsListView.setAdapter(ra);
+
         databaseReference.child("recensions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -54,6 +58,7 @@ public class RecensionsActivity extends AppCompatActivity {
                         }
                     }
                 }
+                finalRa.notifyDataSetChanged();
             }
 
             @Override
@@ -62,6 +67,32 @@ public class RecensionsActivity extends AppCompatActivity {
             }
         });
     }
+    /*private void setUserRecensions(){
+        databaseReference.child("recensions").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> userUids = dataSnapshot.getChildren();
+                for (DataSnapshot userUidSnapsot : userUids) {
+                    Iterable<DataSnapshot> taxiServiceNamesSnaps = userUidSnapsot.getChildren();
+                    for (DataSnapshot taxiServiceNameSnap : taxiServiceNamesSnaps) {
+                        Iterable<DataSnapshot> userRecensionSnaps = taxiServiceNameSnap.getChildren();
+                        for (DataSnapshot userRecensionSnap : userRecensionSnaps) {
+                            UserRecension ur = userRecensionSnap.getValue(UserRecension.class);
+                            if (ur.getTaxiServiceName().equals(getTaxiServiceName())) {
+                                recensions.add(ur);
+                            }
+                        }
+                    }
+                }
+                finalRa.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }*/
     private String getTaxiServiceName() {
         return getIntent().getStringExtra("imeSluzbe");
     }

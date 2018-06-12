@@ -26,10 +26,6 @@ public class FavouriteServiceAdapter extends ArrayAdapter<TaxiSluzba> {
 
     private static class ViewHolder {
         TextView nazivSluzbe;
-        TextView ocena;
-        TextView cenaPoKilometru;
-        TextView brojAutomobila;
-        TextView brojTelefona;
     }
 
     public FavouriteServiceAdapter(ArrayList<TaxiSluzba> sluzbe, Context context){
@@ -70,21 +66,13 @@ public class FavouriteServiceAdapter extends ArrayAdapter<TaxiSluzba> {
                 holder = new ViewHolder();
 
                 holder.nazivSluzbe = (TextView) vi.findViewById(R.id.imeOmiljeneSluzbe);
-                //holder.brojAutomobila = (TextView) vi.findViewById(R.id.brojAutomobilaView);
-                //holder.cenaPoKilometru = (TextView) vi.findViewById(R.id.cenaPoKilometruLabel);
 
                 vi.setTag(holder);
             }else{
                 holder = (ViewHolder) vi.getTag();
             }
 
-            //String ocenaStr = sluzbe.get(position).getOcena()+"";
-            //String cenaStr = sluzbe.get(position).getCenaPoKilometru()+"";
-
             holder.nazivSluzbe.setText(sluzbe.get(position).getIme());
-           // holder.ocena.setText(ocenaStr);
-           // holder.cenaPoKilometru.setText(cenaStr);
-            //holder.brojAutomobila.setText(sluzbe.get(position).getBrojAutomobila());
 
         }catch (Exception e){
 
